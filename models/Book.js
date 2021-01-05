@@ -11,7 +11,7 @@ const bookSchema = mongoose.Schema({
         required: true
     },
     author:{
-        type: Schema.ObjectId,
+        type: String,
         required: true
     },
     isbn:{

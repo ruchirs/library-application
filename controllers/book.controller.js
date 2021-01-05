@@ -10,5 +10,7 @@ exports.books_list = function(req, res, next) {
 
 // Save book to Database
 exports.book_save = function(req, res, next) {
-    Books.save()
+    if(req){
+        Books.save(req.body)
+    }
 }
