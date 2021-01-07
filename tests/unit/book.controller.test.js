@@ -26,7 +26,7 @@ describe("bookController.books_list", () => {
     expect(typeof bookController.book_save).toBe("function");
   });
 
-  it("should expect a response code of 200 after successful completion",  async () => {
+  it("should expect a response code of 201 after successful completion", async () => {
     await bookController.book_save(req, res, next);
     expect(res.statusCode).toBe(201);
     expect(res._isEndCalled()).toBeTruthy();

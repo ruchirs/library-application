@@ -6,6 +6,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const indexRouter = require("./routes/index");
 const booksRouter = require("./routes/books");
+const userRouter = require("./routes/user")
 const app = express();
 
 app.use(express.static("public"));
@@ -22,5 +23,6 @@ db.once("open", () => console.log("connected to mongoose"));
 
 app.use("/", indexRouter);
 app.use("/books", booksRouter);
+app.use("/user", userRouter);
 
 app.listen(process.env.PORT || 5000);
