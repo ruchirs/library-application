@@ -1,16 +1,17 @@
 import React from 'react';
 import { shallow } from 'enzyme'
 import App from './App'
+import { findByTestAttr } from '../test/testUtils'
 
-
+const appSetup = () => shallow(<App />)
 
 test('renders without crashing', () => {
-  const wrapper = shallow(<App />);
-  // console.log(wrapper.debug());
+  const wrapper = appSetup();
   expect(wrapper).toBeTruthy();
 });
 
-test('renders login component', () => {
-  const loginWrapper = shallow(<App />).find("[data-test='auth-component']");
-  expect(loginWrapper.length).toBe(1)
+test('renders app container', () => {
+  const wrapper = appSetup();
+  const appWrapper = findByTestAttr(wrapper, 'auth-component')
+  expect(appWrapper.length).toBe(1)
 })
