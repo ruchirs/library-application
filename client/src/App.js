@@ -1,13 +1,52 @@
-import './App.css';
-import { AuthContainer } from './components/auth/index'
-import styled from 'styled-components'
-import Background from './images/background.jpeg'
+import "./App.css";
+import { AuthContainer } from "./components/auth/index";
+import styled from "styled-components";
+import { Route, BrowserRouter as Router } from "react-router-dom";
+import { Main } from "./components/Main.js";
+import { Header } from "./components/common/index";
+import { useEffect, useState } from "react";
+import Axios from "./axios";
+import { UserContext } from "./components/Context/UserContext";
 
 function App() {
+  const verifiedToken = localStorage.getItem("token");
+  const [role, setRole] = useState("");
+  const [books, setBooks] = useState("");
+
+  const getUserDetails = async () => {
+    try {
+      const getUserDetail = await Axios.get("/user/user-details");
+      setRole(getUserDetail.data.role);
+      setBooks(getUserDetail.data.booksList);
+    } catch (err) {
+      console.log("err", err);
+    }
+  };
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
   return (
-    <AppContainer>
-      <AuthContainer data-test="auth-component"/>
-    </AppContainer>
+    <Router>
+      <UserContext.Provider value={{ role, setRole, books, setBooks }}>
+        <AppContainer>
+          {verifiedToken ? (
+            <StyledComponents>
+              <Header />
+              <Main />
+            </StyledComponents>
+          ) : (
+            <Route
+              path="/"
+              exact
+              component={AuthContainer}
+              data-test="auth-component"
+            />
+          )}
+        </AppContainer>
+      </UserContext.Provider>
+    </Router>
   );
 }
 
@@ -18,7 +57,10 @@ const AppContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url(${Background});
+`;
+
+const StyledComponents = styled.div`
+  width: 100%;
 `;
 
 export default App;

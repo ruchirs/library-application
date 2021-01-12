@@ -8,8 +8,8 @@ import {
   SubmitButton,
   Select,
 } from "./common";
-import { Alignment } from "../PageAlignment/index";
-import { AuthContext } from "./AuthContext";
+import { Alignment } from "../pageAlignment/index";
+import { AuthContext } from "../Context/AuthContext";
 import axios from '../../axios'
 
 export function Signup(props) {
@@ -28,23 +28,31 @@ export function Signup(props) {
   ]
 
   const registerUser = async () => {
-    if(name && email && password && confirmPassword && role) {
-        if(!emailRegex.test(email)) {
-            return setError('Invalid Email.')
-        }
-        if(password === confirmPassword){
-            const request = await axios.post('/user/signup', 
-            {
-                email: email,
-                password: password,
-                name: name,
-                role: role.toLowerCase()
-            })
-        } else {
-            setError("Passwords do not match.")
-        }
-    } else {
-        setError("Please complete the missing fields.")
+    try{
+      if(name && email && password && confirmPassword && role) {
+          if(!emailRegex.test(email)) {
+              return setError('Invalid Email.')
+          }
+          if(password === confirmPassword){
+              const request = await axios.post('/user/signup', 
+              {
+                  email: email,
+                  password: password,
+                  name: name,
+                  role: role.toLowerCase()
+              })
+              if(request){
+                switchToSignin()   
+              }
+              
+          } else {
+              setError("Passwords do not match.")
+          }
+      } else {
+          setError("Please complete the missing fields.")
+      }
+    } catch (err) {
+      setError(err.response.data.message)
     }
   }
 

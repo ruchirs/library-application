@@ -1,0 +1,47 @@
+
+.header {
+    margin-top: 20px;
+    display: flex;
+    flex: 1;
+    align-items: flex-start;
+  }
+  
+  .header-top {
+    display: flex;
+    width: 100%;
+    height: 105px;
+  }
+  
+  .header-top__logo {
+    display: flex;
+    margin-right: 20px;
+  }
+  
+  .header-logo {
+    color: inherit;
+    text-decoration: inherit;
+    font-family: RobotoThin;
+    font-size: 10px;
+  }
+  
+  .header-top__navbar {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  
+  .header-top__seperator {
+    width: 100%;
+    border: none;
+    height: 2px;
+    margin-top: 2px;
+    background-color: black;
+  }
+  
+  .header-top__navigation {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-right: 55px;
+  }

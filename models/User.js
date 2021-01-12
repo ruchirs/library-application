@@ -24,6 +24,11 @@ const User = Schema({
         enum: ["user", "admin"]
     },
 
+    booksId: {
+        type: Array,
+        default: []
+    },
+
     date: {
         type: Date,
         default: Date.now

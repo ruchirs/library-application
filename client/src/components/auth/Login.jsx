@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import {
   BoldLink,
   BoxContainer,
@@ -7,21 +7,27 @@ import {
   MutedLink,
   SubmitButton,
 } from "./common";
-import { Alignment } from "../PageAlignment/index";
-import { AuthContext } from "./AuthContext";
+import { Alignment } from "../pageAlignment/index";
+import { AuthContext } from "../Context/AuthContext";
 import axios from '../../axios'
+const createHistory = require("history").createBrowserHistory;
 
 export function Login(props) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { switchToSignup } = useContext(AuthContext);
-  const [error, setError] = useState('')
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const switchToSignup = React.useContext(AuthContext).switchToSignup;
+  const [error, setError] = React.useState('');
 
 const login = async () => {
     try{
         if(email && password){
             const request = await axios.post('/user/login', {email: email, password: password})
-            console.log('request', request)
+            localStorage.setItem('token', request.data.token)
+            let history = createHistory();
+            history.push('/dashboard');
+            let pathUrl = window.location.href;
+            window.location.href = pathUrl;
+
         } else {
             setError("Please enter missing fields.")
         }
@@ -33,7 +39,7 @@ const login = async () => {
   return (
     <BoxContainer>
       <FormContainer>
-        <Input type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+        <Input data-test="input-box" type="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
         <Input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
       </FormContainer>
       <Alignment direction="vertical" margin={10} />

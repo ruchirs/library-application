@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion } from "framer-motion";
 import { Login } from './Login';
 import { Signup } from './Signup'
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../Context/AuthContext";
+import Background from '../../images/background.jpeg'
 
 export function AuthContainer (props) {
 
-    const [isExpanded, setExpanded] = useState(false);
+    const [isExpanded, setExpanded] = React.useState(false);
 
     const playExpandingAnimation = () => {
         setExpanded(true);
@@ -30,10 +31,11 @@ export function AuthContainer (props) {
         }, 400);
       };
 
-    const [active, setActive] = useState("signin");
+    const [active, setActive] = React.useState("signin");
     const contextValue = { switchToSignup, switchToSignin };
     return (
         <AuthContext.Provider value={contextValue}>
+            <BackgroundContainer>
             <MainContainer>
                 <OuterContainer data-test='outer-container'>
                     <Bubble 
@@ -64,9 +66,17 @@ export function AuthContainer (props) {
                     {active === "signup" && <Signup />}
                 </InnerContainer>
             </MainContainer>
+            </BackgroundContainer>
         </AuthContext.Provider>
     )
 }
+
+const BackgroundContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    background-image: url(${Background});
+    backgroundSize: 'cover'
+`
 
 const MainContainer = styled.div`
     display: flex;
@@ -79,6 +89,9 @@ const MainContainer = styled.div`
     box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
     position: relative;
     overflow: hidden;
+    margin: auto;
+    margin-top: 5%;
+    margin-bottom: 19%;
 `
 
 const Bubble = styled(motion.div)`

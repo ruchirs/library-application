@@ -1,5 +1,5 @@
+import React from 'react'
 import { AuthContainer } from './index'
-import { Login } from './Login'
 import SignUp from './Signup'
 import { shallow } from 'enzyme'
 import { findByTestAttr } from '../../../test/testUtils'
@@ -15,7 +15,7 @@ describe("renders the components of AuthContainer", () => {
     it("renders the OuterContainer", () => {
         const wrapper = setup();
         const outerContainer = findByTestAttr(wrapper, 'outer-container')
-        expect(wrapper.length).toBe(1)
+        expect(outerContainer.length).toBe(1)
     })
 
     it("renders the Header Container", () => {

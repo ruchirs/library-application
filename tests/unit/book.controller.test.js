@@ -55,4 +55,13 @@ describe("bookController.books_list", () => {
     await bookController.book_save(req, res, next);
     expect(next).toBeCalledWith(errorMessage);
   });
+
+  it("should have a book_update function", () => {
+    expect(typeof bookController.book_update).toBe("function");
+  })
+
+  it("book_update should get user email from JWT", async () => {
+    await bookController.book_update(req, res, next);
+    expect(req.email.length).toBe(1)
+  })
 });

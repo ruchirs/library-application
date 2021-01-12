@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const bookSchema = Schema({
-  _id: mongoose.Schema.Types.ObjectId,
+  
   title: {
     type: String,
     required: true,
@@ -19,6 +19,9 @@ const bookSchema = Schema({
     type: String,
     required: true,
   },
+  status: {
+    type: String,  
+    enum:['Available', 'Borrowed'], default:'Available'},
 });
 
 module.exports = mongoose.model("Book", bookSchema);
